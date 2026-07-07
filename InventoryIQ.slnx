@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/InventoryIQ.API/InventoryIQ.API.csproj" />
+    <Project Path="src/InventoryIQ.Application/InventoryIQ.Application.csproj" />
+    <Project Path="src/InventoryIQ.Domain/InventoryIQ.Domain.csproj" />
+    <Project Path="src/InventoryIQ.Infrastructure/InventoryIQ.Infrastructure.csproj" />
+    <Project Path="src/InventoryIQ.Shared/InventoryIQ.Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InventoryIQ.UnitTests/InventoryIQ.UnitTests.csproj" />
+  </Folder>
+</Solution>
