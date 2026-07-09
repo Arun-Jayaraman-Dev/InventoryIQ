@@ -101,6 +101,11 @@ namespace InventoryIQ.Domain.Entities
                 throw new InsufficientStockException();
             }
 
+            if(amount > Quantity)
+            {
+                throw new InsufficientStockException();
+            }
+
             Quantity -= amount;
         }
     }
