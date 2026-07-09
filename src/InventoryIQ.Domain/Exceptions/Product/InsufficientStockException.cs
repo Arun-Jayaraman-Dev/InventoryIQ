@@ -1,8 +1,10 @@
-﻿namespace InventoryIQ.Domain.Exceptions.Product
+﻿using System.Collections;
+
+namespace InventoryIQ.Domain.Exceptions.Product
 {
     public class InsufficientStockException : Exception
     {
-        public InsufficientStockException() : base("Product stock cannot be negative.")
+        public InsufficientStockException() : base("Cannot decrease stock below zero.")
         {
         }
     }

@@ -61,7 +61,8 @@ namespace InventoryIQ.Domain.Entities
 
         private void SetQuantity(int quantity)
         {
-            if (quantity < 0)            {
+            if (quantity < 0)            
+            {
                 throw new InvalidStockAdjustmentException();
             }
 

@@ -2,7 +2,7 @@
 {
     public class InvalidStockAdjustmentException : Exception
     {
-        public InvalidStockAdjustmentException() : base("Product stock should be a positive value.")
+        public InvalidStockAdjustmentException() : base("Stock adjustment amount must be greater than zero.")
         {
         }
     }
