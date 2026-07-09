@@ -63,7 +63,7 @@ namespace InventoryIQ.Domain.Entities
         {
             if (quantity < 0)            
             {
-                throw new InvalidStockAdjustmentException();
+                throw new InvalidProductQuantityException();
             }
 
             Quantity = quantity;
@@ -83,7 +83,7 @@ namespace InventoryIQ.Domain.Entities
         {
             if (amount <= 0)
             {
-                throw new InvalidStockAdjustmentException();
+                throw new InvalidProductQuantityException();
             }
 
             Quantity += amount;
@@ -93,7 +93,7 @@ namespace InventoryIQ.Domain.Entities
         {
             if (amount <= 0)
             {
-                throw new InvalidStockAdjustmentException();
+                throw new InvalidProductQuantityException();
             }
 
             if (Quantity < amount)
