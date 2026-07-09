@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace InventoryIQ.Domain.Exceptions.Product
+﻿namespace InventoryIQ.Domain.Exceptions.Product
 {
     public class InsufficientStockException : Exception
     {
