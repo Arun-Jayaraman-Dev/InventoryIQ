@@ -1,4 +1,4 @@
-﻿using InventoryIQ.Domain.Exceptions;
+﻿using InventoryIQ.Domain.Exceptions.Product;
 
 namespace InventoryIQ.Domain.Entities
 {
@@ -8,19 +8,24 @@ namespace InventoryIQ.Domain.Entities
         public string Name { get; private set; } = null!;
         public string Sku { get; private set; } = null!;
         public decimal Price { get; private set; }
+        public int Quantity { get; private set; }
 
         //Required by EF Core
         private Product()
         {
         }
 
-        public Product(string name, string sku, decimal price)
+        public Product(string name, string sku, decimal price, int quantity)
         {
             Id = Guid.NewGuid();
 
             SetName(name);
+
             SetSku(sku);
+
             SetPrice(price);
+
+            SetQuantity(quantity);
         }
 
         private void SetName(string name)
@@ -54,6 +59,15 @@ namespace InventoryIQ.Domain.Entities
             Price = price;
         }
 
+        private void SetQuantity(int quantity)
+        {
+            if (quantity < 0)
+            {
+                throw new InvalidProductQuantityException();
+            }
+            Quantity = quantity;
+        }
+
         public void Rename(string newName)
         {
             SetName(newName);
@@ -62,6 +76,31 @@ namespace InventoryIQ.Domain.Entities
         public void ChangePrice(decimal newPrice)
         {
             SetPrice(newPrice);
+        }
+
+        public void IncreaseStock(int amount)
+        {
+            if (amount < 0)
+            {
+                throw new InvalidProductQuantityException();
+            }
+
+            Quantity += amount;
+        }
+
+        public void DecreaseStock(int amount)
+        {
+            if (amount < 0)
+            {
+                throw new InvalidProductQuantityException();
+            }
+
+            if (Quantity < amount)
+            {
+                throw new InsufficientStockException();
+            }
+
+            Quantity -= amount;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace InventoryIQ.Domain.Exceptions
+﻿namespace InventoryIQ.Domain.Exceptions.Product
 {
     public class InvalidProductSkuException : Exception
     {
