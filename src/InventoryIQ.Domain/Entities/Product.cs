@@ -35,7 +35,7 @@ namespace InventoryIQ.Domain.Entities
                 throw new InvalidProductNameException();
             }
 
-            Name = name;
+            Name = name.Trim();
         }
 
         private void SetSku(string sku)
@@ -45,9 +45,9 @@ namespace InventoryIQ.Domain.Entities
                 throw new InvalidProductSkuException();
             }
 
-            Sku = sku;
+            Sku = sku.Trim();
         }
-            
+
 
         private void SetPrice(decimal price)
         {
@@ -61,9 +61,9 @@ namespace InventoryIQ.Domain.Entities
 
         private void SetQuantity(int quantity)
         {
-            if (quantity < 0)
+            if (quantity <= 0)
             {
-                throw new InvalidProductQuantityException();
+                throw new InvalidStockAdjustmentException();
             }
             Quantity = quantity;
         }
@@ -80,9 +80,9 @@ namespace InventoryIQ.Domain.Entities
 
         public void IncreaseStock(int amount)
         {
-            if (amount < 0)
+            if (amount <= 0)
             {
-                throw new InvalidProductQuantityException();
+                throw new InvalidStockAdjustmentException();
             }
 
             Quantity += amount;
@@ -90,9 +90,9 @@ namespace InventoryIQ.Domain.Entities
 
         public void DecreaseStock(int amount)
         {
-            if (amount < 0)
+            if (amount <= 0)
             {
-                throw new InvalidProductQuantityException();
+                throw new InvalidStockAdjustmentException();
             }
 
             if (Quantity < amount)
