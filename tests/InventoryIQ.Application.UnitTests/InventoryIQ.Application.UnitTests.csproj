@@ -23,7 +23,7 @@
 	  <Folder Include="Products\Commands\CreateProduct\Exceptions\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\src\InventoryIQ.Application\InventoryIQ.Application.csproj" />
-	  <ProjectReference Include="..\src\InventoryIQ.Domain\InventoryIQ.Domain.csproj" />
+	  <ProjectReference Include="..\..\src\InventoryIQ.Application\InventoryIQ.Application.csproj" />
+	  <ProjectReference Include="..\..\src\InventoryIQ.Domain\InventoryIQ.Domain.csproj" />
 	</ItemGroup>
 </Project>

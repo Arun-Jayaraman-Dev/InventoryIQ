@@ -7,7 +7,7 @@
     <Project Path="src/InventoryIQ.Shared/InventoryIQ.Shared.csproj" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="InventoryIQ.Application.UnitTests/InventoryIQ.Application.UnitTests.csproj" />
-    <Project Path="tests/InventoryIQ.UnitTests/InventoryIQ.Domain.UnitTests.csproj" />
+    <Project Path="tests/InventoryIQ.Application.UnitTests/InventoryIQ.Application.UnitTests.csproj" />
+    <Project Path="tests/InventoryIQ.Domain.UnitTests/InventoryIQ.Domain.UnitTests.csproj" />
   </Folder>
 </Solution>
