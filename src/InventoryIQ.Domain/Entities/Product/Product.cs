@@ -1,6 +1,6 @@
 ﻿using InventoryIQ.Domain.Exceptions.Product;
 
-namespace InventoryIQ.Domain.Entities
+namespace InventoryIQ.Domain.Entities.Product
 {
     public sealed class Product
     {
@@ -35,6 +35,11 @@ namespace InventoryIQ.Domain.Entities
                 throw new InvalidProductNameException();
             }
 
+            if(name.Length > ProductConstants.MaxNameLength)
+            {
+                throw new ProductNameTooLongException();
+            }
+
             Name = name.Trim();
         }
 
@@ -43,6 +48,11 @@ namespace InventoryIQ.Domain.Entities
             if (string.IsNullOrWhiteSpace(sku))
             {
                 throw new InvalidProductSkuException();
+            }
+
+            if(sku.Length > ProductConstants.MaxSkuLength)
+            {
+                throw new ProductSkuTooLongException();
             }
 
             Sku = sku.Trim();

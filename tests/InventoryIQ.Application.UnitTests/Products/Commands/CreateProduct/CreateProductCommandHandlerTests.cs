@@ -2,7 +2,7 @@
 using InventoryIQ.Application.Products.Commands.CreateProduct;
 using InventoryIQ.Application.Products.Commands.CreateProduct.Exceptions;
 using InventoryIQ.Application.Products.Interfaces;
-using InventoryIQ.Domain.Entities;
+using InventoryIQ.Domain.Entities.Product;
 using Moq;
 using Xunit;
 
@@ -29,17 +29,18 @@ namespace InventoryIQ.Application.UnitTests.Products.Commands.CreateProduct
             // Arrange
             var command = CreateValidCommand();
 
-            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku)).ReturnsAsync(false);
 
-            _productRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
+            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+
+            _productRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             // Act
-            var result = await _handler.Handle(command);
+            var result = await _handler.Handle(command, default);
 
             // Assert
             result.Should().NotBe(Guid.Empty);
-            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku), Times.Once);
-            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Once);
+            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>()), Times.Once);
+            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Fact]
@@ -48,15 +49,15 @@ namespace InventoryIQ.Application.UnitTests.Products.Commands.CreateProduct
             // Arrange
             var command = CreateValidCommand();
 
-            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku)).ReturnsAsync(true);
+            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // Act
-            Func<Task> act = async () => await _handler.Handle(command);
+            Func<Task> act = async () => await _handler.Handle(command, default);
 
             // Assert
             await act.Should().ThrowAsync<DuplicateProductSkuException>().WithMessage("Product with the same SKU already exists.");
-            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku), Times.Once);
-            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Never);
+            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>()), Times.Once);
+            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact]
@@ -65,15 +66,15 @@ namespace InventoryIQ.Application.UnitTests.Products.Commands.CreateProduct
             // Arrange
             var command = CreateValidCommand();
 
-            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku)).ReturnsAsync(false);
-            _productRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Product>())).Returns(Task.CompletedTask);
+            _productRepositoryMock.Setup(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+            _productRepositoryMock.Setup(repo => repo.AddAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
             // Act
-            await _handler.Handle(command);
+            await _handler.Handle(command, default);
 
             // Assert
-            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku), Times.Once);
-            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>()), Times.Once);
+            _productRepositoryMock.Verify(repo => repo.ExistsBySkuAsync(command.Sku, It.IsAny<CancellationToken>()), Times.Once);
+            _productRepositoryMock.Verify(repo => repo.AddAsync(It.IsAny<Product>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

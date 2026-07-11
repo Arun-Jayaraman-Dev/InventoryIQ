@@ -1,6 +1,6 @@
 ﻿using InventoryIQ.Application.Products.Commands.CreateProduct.Exceptions;
 using InventoryIQ.Application.Products.Interfaces;
-using InventoryIQ.Domain.Entities;
+using InventoryIQ.Domain.Entities.Product;
 
 namespace InventoryIQ.Application.Products.Commands.CreateProduct
 {
@@ -13,9 +13,9 @@ namespace InventoryIQ.Application.Products.Commands.CreateProduct
             _productRepository = productRepository;
         }
 
-        public async Task<Guid> Handle(CreateProductCommand command)
+        public async Task<Guid> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var skuExists = await _productRepository.ExistsBySkuAsync(command.Sku);
+            var skuExists = await _productRepository.ExistsBySkuAsync(command.Sku, cancellationToken);
 
             if (skuExists)
             {
@@ -24,7 +24,7 @@ namespace InventoryIQ.Application.Products.Commands.CreateProduct
 
             var product = new Product(command.Name, command.Sku, command.Price, command.Quantity);           
 
-            await _productRepository.AddAsync(product);
+            await _productRepository.AddAsync(product, cancellationToken);
             return product.Id;
         }
     }
