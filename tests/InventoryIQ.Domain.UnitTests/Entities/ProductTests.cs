@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using InventoryIQ.Domain.Entities;
+using InventoryIQ.Domain.Entities.Product;
 using InventoryIQ.Domain.Exceptions.Product;
 
 namespace InventoryIQ.Domain.UnitTests.Entities
@@ -10,6 +10,7 @@ namespace InventoryIQ.Domain.UnitTests.Entities
         {
             return new Product("LAPTOP", "LAPTOP-GRAY", 1000m, 5);
         }
+
         [Fact]
         public void CreateProduct_WithValidData_ShouldCreateProduct()
         {
@@ -202,6 +203,29 @@ namespace InventoryIQ.Domain.UnitTests.Entities
             Action act = () => product.ChangePrice(newPrice);
             // Assert
             act.Should().Throw<InvalidProductPriceException>();
+        }
+
+        [Fact]
+        public void RenameProduct_GreaterThanMaxLength_ShouldThrowProductNameTooLongException()
+        {
+            // Arrange
+            var product = CreateValidProduct();
+            var newName = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets. It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.";
+            // Act
+            Action act = () => product.Rename(newName);
+            // Assert
+            act.Should().Throw<ProductNameTooLongException>();
+        }
+
+        [Fact]
+        public void CreateProduct_GreaterThanMaxSkuLength_ShouldThrowProductSkuTooLongException()
+        {
+            // Arrange and Act
+
+            Action act = () => new Product("Laptop", "LAP001XYZIODABDVBSAJVJAVDJVJAVFDAGDFJAHDJAHDGAHDGJHASGDJHASDGJHASGDJSAHGDJHDAGJAH", 1000m, 10);
+
+            // Assert
+            act.Should().Throw<ProductSkuTooLongException>();
         }
     }
 }
