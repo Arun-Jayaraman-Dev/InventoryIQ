@@ -1,4 +1,5 @@
-﻿using InventoryIQ.Application.Products.Interfaces;
+﻿using InventoryIQ.Application.Products.Commands.CreateProduct.Exceptions;
+using InventoryIQ.Application.Products.Interfaces;
 using InventoryIQ.Domain.Entities;
 
 namespace InventoryIQ.Application.Products.Commands.CreateProduct
@@ -18,7 +19,7 @@ namespace InventoryIQ.Application.Products.Commands.CreateProduct
 
             if (skuExists)
             {
-                throw new InvalidOperationException("Product with the same SKU already exists.");
+                throw new DuplicateProductSkuException();
             }
 
             var product = new Product(command.Name, command.Sku, command.Price, command.Quantity);           
